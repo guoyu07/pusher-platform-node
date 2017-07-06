@@ -30,3 +30,6 @@ export interface AuthenticateOptions {
   userId: string;
   serviceClaims: any;
 }
+
+export const hostnameRegex = 
+  /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/;

@@ -5,7 +5,7 @@ import * as jwt from "jsonwebtoken";
 
 import Authenticator, { TokenWithExpiry, AuthenticationResponse } from "./authenticator";
 import BaseClient from "./base_client";
-import {AuthenticateOptions, RequestOptions} from "./common";
+import {AuthenticateOptions, RequestOptions, hostnameRegex} from "./common";
 
 export interface Options {
   cluster: string;
@@ -24,7 +24,7 @@ export default class App {
 
   constructor(options: Options) {
     this.appId = options.appId;
-
+    
     let keyParts = options.appKey.match(/^([^:]+):(.+)$/);
     if (!keyParts) {
       throw new Error("Invalid app key");
@@ -32,8 +32,14 @@ export default class App {
     this.appKeyId = keyParts[1];
     this.appKeySecret = keyParts[2];
 
-    this.client = options.client || new BaseClient({
-      host: options.cluster,
+    const { cluster, client } = options;
+
+    if (!hostnameRegex.test(cluster)) {
+      throw new Error(`Cluster must be a valid hostname. Getting: ${cluster}`);
+    }
+
+    this.client = client || new BaseClient({
+      host: cluster,
     });
 
     this.authenticator = new Authenticator(
