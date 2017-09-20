@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning Scheme](http://semver.org)
 
+## [v0.9.0] 2017-09-20
+
+### Changes
+
+- Update `ErrorResponse` type to have `error_type`, `error_description`, and `error_uri` properties.
+
 ## [v0.8.3] 2017-08-29
 
 ### Changes
